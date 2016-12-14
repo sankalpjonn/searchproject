@@ -3,4 +3,4 @@ sudo apt-get install -y git python python-pip python-dev libssl-dev libmysqlclie
 sudo pip install virtualenvwrapper
 mkdir venv
 virtualenv venv/
-source venv/bin/activate && sudo pip install -r requirements.txt
+source venv/bin/activate && venv/bin/pip install -r requirements.txt
