@@ -6,7 +6,7 @@ from requests_oauthlib import OAuth1
 
 
 class Search():
-    def __init__(self, sources=None, limit=20):
+    def __init__(self, source=None, limit=20):
         # If more search sources need to be added, this dictionary needs to be extended with a new entry
         # url is the address of the source and response_parser is the function used to parse the response of the api into a standard form
         # auth will contain the oauth1 credentails if the api requires it.
@@ -33,7 +33,8 @@ class Search():
                 "auth": OAuth1('TyU15xxpc4kcOvd8KevEm7BHF', 'K8eWPZGLdJ7R7zUUO576eU6QHZUeljq6qwtSzYCPlZDTngM98R', '809083502889050112-7Vp2owNANCVe8SdHbVrkzNrVWTM3NxD', '2YdBgwnpOraX3P8obNNe4GXmi92B4JDWexRoVDtn162Sj')
             }
         }
-        self.sources = sources or default_sources
+        # by passing the source parameter, the response can be limited to a single source
+        self.sources = {source: default_sources[source]} if source else default_sources
         self.q = Queue()
         # it is optional to restrict the search limit of each source by passing the limit parameter. Default will be 20
         self.limit = limit
