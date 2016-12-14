@@ -4,3 +4,4 @@
 - run python manage.py runserver
 - in the browser enter localhost:8000/search?q=<query>
 - if you want the results from each source to be limited, use localhost:8000/search?q=<query>&limit=<limit>
+- Main application code is present in searchv1/searchpy
