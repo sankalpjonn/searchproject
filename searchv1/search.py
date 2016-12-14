@@ -2,9 +2,6 @@ import requests
 import urllib
 import json
 from multiprocessing import Process, Queue
-from requests.packages.urllib3.exceptions import InsecurePlatformWarning, SNIMissingWarning
-requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
-requests.packages.urllib3.disable_warnings(SNIMissingWarning)
 
 
 class Search():
