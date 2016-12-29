@@ -7,8 +7,10 @@ from models import Image
 import json
 import redis
 from process_images import ProcessFiles
+from decorators import throttling
 # Create your views here.
 
+r_server = redis.StrictRedis(host='localhost', port=6379, db=2)
 
 @csrf_exempt
 def search(request):
@@ -30,14 +32,12 @@ def userlogin(request):
 
 
 @csrf_exempt
+@throttling(r_server, 10, 5)
 def fetch_images(request):
+    import pdb; pdb.set_trace()
     if not request.user.is_authenticated():
         return HttpResponse(json.dumps({"status": "failure","message": "user not logged in"}, indent=4, sort_keys=True), content_type="application/json")
     data = json.loads(request.body)
-    r_server = redis.StrictRedis(host='localhost', port=6379, db=2)
-    if not r_server.exists("THROT:{}".format(request.user)):
-        r_server.incr("THROT:{}".format(request.user))
-        r_server.expire("THROT:{}".format(request.user), 5 * 60 * 60)
-    p = ProcessFiles(data['images'], request.user, 100, r_server)
+    p = ProcessFiles(data['images'])
     res = p.run()
     return HttpResponse(json.dumps({"status": "success", "result": res}, indent=4, sort_keys=True), content_type="application/json")

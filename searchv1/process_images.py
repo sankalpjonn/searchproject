@@ -14,12 +14,9 @@ from django.db import IntegrityError
 
 
 class ProcessFiles():
-    def __init__(self, images, username, throttle_rate, r_server):
+    def __init__(self, images):
         self.images = images
-        self.username = username
         self.q = Queue()
-        self.throttle_rate = throttle_rate
-        self.r_server = r_server
 
     def save_image(self, url):
         # import pdb; pdb.set_trace()
@@ -44,11 +41,6 @@ class ProcessFiles():
     def run(self):
         thread_list = []
         for url in self.images:
-            if self.r_server.incr("THROT:{}".format(self.username)) > self.throttle_rate:
-                result = {
-                    "error": "throttle rate exceeded"
-                }
-                return result
             t = threading.Thread(target=self.save_image, args=(url,))
             t.start()
             thread_list.append(t)
