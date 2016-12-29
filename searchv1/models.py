@@ -8,3 +8,9 @@ class Image(models.Model):
     meta_data = JSONField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    def admin_thumbnail(self):
+        return u'<img src="%s" />' % ("http://104.198.45.236/images/" + self.local_filename)
+
+    admin_thumbnail.short_description = 'Thumbnail'
+    admin_thumbnail.allow_tags = True

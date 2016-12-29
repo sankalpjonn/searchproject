@@ -32,7 +32,6 @@ def userlogin(request):
 @csrf_exempt
 @throttling(10, 5)
 def fetch_images(request):
-    import pdb; pdb.set_trace()
     if not request.user.is_authenticated():
         return HttpResponse(json.dumps({"status": "failure","message": "user not logged in"}, indent=4, sort_keys=True), content_type="application/json")
     data = json.loads(request.body)
