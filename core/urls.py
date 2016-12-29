@@ -19,5 +19,7 @@ from searchv1 import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^search', views.search, name='search')
+    url(r'^search', views.search, name='search'),
+    url(r'^userlogin', views.userlogin, name='userlogin'),
+    url(r'^fetch_images', views.fetch_images, name='fetch_images')
 ]
