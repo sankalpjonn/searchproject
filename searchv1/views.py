@@ -10,8 +10,6 @@ from process_images import ProcessFiles
 from decorators import throttling
 # Create your views here.
 
-r_server = redis.StrictRedis(host='localhost', port=6379, db=2)
-
 @csrf_exempt
 def search(request):
     if not request.user.is_authenticated():
@@ -32,7 +30,7 @@ def userlogin(request):
 
 
 @csrf_exempt
-@throttling(r_server, 10, 5)
+@throttling(10, 5)
 def fetch_images(request):
     import pdb; pdb.set_trace()
     if not request.user.is_authenticated():
